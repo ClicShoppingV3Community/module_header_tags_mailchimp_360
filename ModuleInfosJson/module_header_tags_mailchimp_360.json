@@ -1,0 +1,28 @@
+{
+  "title":			"module_header_tags_mailchimp_360",
+  "type":       "meta tag",
+  "vendor":			"header_tags",
+  "is_free":   "Yes",
+  "website_link_to_sell" : "",
+  "version":			1.0,
+  "req_core_version":	3.0,
+  "license":			"GPL 2 - MIT",
+  "tag":			    "header tag, script, meta tag, json, mailchimp, campaign",
+  "install":            "includes/modules/",
+  "module_directory":   "header_tags",
+  "apps_name":          "",
+  "type_module":        "fixe",
+  "dependance":         "",
+  "description":        "This module is designed to acquire the emails of customers, to send newsletters. but also to receive a set of statistics..",
+  "image":              "",
+
+  "authors": [
+    {
+      "name":		    "ClicShopping Team",
+      "company":	    "Innov-concept",
+      "email":	        "",
+      "website":	    "http://www.clicshopping.org",
+      "Community":	  "http://www.clicshopping.org"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+module_header_tags_mailchimp_360_title = Souhaitez-vous activer la campagne marketing via MailChimp E-Commerce 360 ?
+module_header_tags_mailchimp_360_description = <img src="images/icon_popup.gif" border="0">&nbsp;<a href="http://eepurl.com/bxza1" target="_blank" style="text-decoration: underline; font-weight: bold;">Veuillez visiter le site internet  MailChimp pour utiliser ce service</a>&nbsp;<a href="javascript:toggleDivBlock(\'mailchimpInfo\">(info)</a><span id="mailchimpInfo" style="display: none;"><br /><i>Cliquez surle lien ci-dessous pour vous enregistrer sur MailChimp et effectuer vos campagne marketing.</i></span><br /><br />le système MailChimp E-Commerce 360 module est outil vous permettant d'analyser vos campagnes marketing
+

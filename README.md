@@ -12,8 +12,7 @@ You must register on MailChimp
 Technical Prerequisites: None
 
 modules:
-- Compatibility: < version 3.0
-- Certified by e- Imaginis
+- License GPL2 - MIT
 - Multi- languages
 
 Recommendation and documentation specific use :

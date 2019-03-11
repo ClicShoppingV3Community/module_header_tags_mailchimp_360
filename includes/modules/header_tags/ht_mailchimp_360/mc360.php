@@ -18,7 +18,7 @@ use ClicShopping\OM\Registry;
     public $apikey = '';
     public $key_valid = false;
     public $store_id = '';
-    
+
     public function __construct() {
       $this->apikey = MODULE_HEADER_TAGS_MAILCHIMP_360_API_KEY;
       $this->store_id = MODULE_HEADER_TAGS_MAILCHIMP_360_STORE_ID;
@@ -30,7 +30,7 @@ use ClicShopping\OM\Registry;
 
       $this->validate_cfg();
     }
-    
+
     public function complain($msg){
             echo '<div style="position:absolute;left:0;top:0;width:100%;font-size:24px;text-align:center;background:#CCCCCC;color:#660000">MC360 Module: '.$msg.'</div><br />';
     }
@@ -43,7 +43,7 @@ use ClicShopping\OM\Registry;
             $this->complain('You have not entered your API key. Please read the installation instructions.');
             return;
         }
-        
+
         if (!$this->key_valid){
             $GLOBALS["mc_api_key"] = $this->apikey;
             $api = new MCAPI('notused','notused');
@@ -56,7 +56,7 @@ use ClicShopping\OM\Registry;
                 $CLICSHOPPING_Db->save('configuration', ['configuration_value' => 'true'],
                                                  ['configuration_key' => 'MODULE_HEADER_TAGS_MAILCHIMP_360_KEY_VALID']
                                 );
-                
+
                 if (empty($this->store_id)){
                     $this->store_id = md5(uniqid(rand(), true));
                     $CLICSHOPPING_Db->save('configuration', ['configuration_value' => $this->store_id],
@@ -65,7 +65,7 @@ use ClicShopping\OM\Registry;
                 }
             }
         }
-        
+
         if (empty($this->store_id)){
             $this->complain('Your Store ID has not been set. This is not good. Contact support.');
         } else {
@@ -83,9 +83,9 @@ use ClicShopping\OM\Registry;
         if (isset($_REQUEST['mc_eid'])){
             setcookie('mailchimp_email_id',trim($_REQUEST['mc_eid']), $thirty_days);
         }
-        return;    
+        return;
     }
-    
+
     public function process() {
 
       $CLICSHOPPING_Mail = Registry::get('Mail');
@@ -109,11 +109,11 @@ use ClicShopping\OM\Registry;
                             '$_COOKIE =' . "\n" .
                             print_r($_COOKIE, true);
         }
-        
+
         if (!isset($_COOKIE['mailchimp_campaign_id']) || !isset($_COOKIE['mailchimp_email_id'])){
             return;
         }
-        
+
         if ($this->debug){
             $debug_email .= date('Y-m-d H:i:s') . ' current ids:' . "\n" .
                             date('Y-m-d H:i:s') . ' eid =' . $_COOKIE['mailchimp_email_id'] . "\n" .
@@ -129,17 +129,17 @@ use ClicShopping\OM\Registry;
         while ($Qtotals->fetch()) {
             $totals_array[$Qtotals->value('class')] = $Qtotals->value('value');
         }
-        
+
         $products_array = array();
         $Qproducts = $CLICSHOPPING_Db->get('orders_products', ['products_id',
-                                                        'products_model', 
-                                                        'products_name', 
-                                                        'products_tax', 
-                                                        'products_quantity', 
-                                                        'final_price'
-                                                        ], 
-                                                        ['orders_id' => $Qorder->valueInt('orders_id')]
-                                    );
+                                                              'products_model',
+                                                              'products_name',
+                                                              'products_tax',
+                                                              'products_quantity',
+                                                              'final_price'
+                                                              ],
+                                                              ['orders_id' => $Qorder->valueInt('orders_id')]
+                                          );
         while ($Qproducts->fetch()) {
             $products_array[] = array('id' => $Qproducts->valueInt('products_id'),
                                     'name' => $Qproducts->value('products_name'),
@@ -188,24 +188,25 @@ use ClicShopping\OM\Registry;
 
             //All this to get a silly category name from here
             $Qcat = $CLICSHOPPING_Db->get('products_to_categories',
-                                   'categories_id', ['products_id' => $product['id']],
-                                                      null, 
-                                                      1
-                                   );
+                                           'categories_id', ['products_id' => $product['id']],
+                                                              null,
+                                                              1
+                                           );
 
             $cat_id = $Qcat->valueInt('categories_id');
-            
+
             $item['category_id'] = $cat_id;
             $cat_name == '';
-            $continue = true; 
-            while($continue){            
+            $continue = true;
+            while($continue){
             //now recurse up the categories tree...
-                $Qcat = $CLICSHOPPING_Db->prepare('select c.categories_id, 
-                                                    c.parent_id, 
-                                                    cd.categories_name 
-                                            from :table_categories c inner join :table_categories_description cd on c.categories_id = cd.categories_id 
-                                            where c.categories_id = :categories_id
-                                           ');
+                $Qcat = $CLICSHOPPING_Db->prepare('select c.categories_id,
+                                                            c.parent_id,
+                                                            cd.categories_name
+                                                    from :table_categories c inner join :table_categories_description cd on c.categories_id = cd.categories_id
+                                                    where c.categories_id = :categories_id
+                                                    and c.status = 1
+                                                   ');
                 $Qcat->bindInt(':categories_id', $cat_id);
                 $Qcat->execute();
 
@@ -220,7 +221,7 @@ use ClicShopping\OM\Registry;
                 }
             }
             $item['category_name'] = $cat_name;
-            
+
             $mcorder['items'][] = $item;
         }
 

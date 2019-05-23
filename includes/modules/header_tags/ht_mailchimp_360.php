@@ -1,18 +1,19 @@
 <?php
-/**
- *
- *  @copyright 2008 - https://www.clicshopping.org
- *  @Brand : ClicShopping(Tm) at Inpi all right Reserved
- *  @Licence GPL 2 & MIT
- *  @licence MIT - Portion of osCommerce 2.4
- *  @Info : https://www.clicshopping.org/forum/trademark/
- *
- */
+  /**
+   *
+   * @copyright 2008 - https://www.clicshopping.org
+   * @Brand : ClicShopping(Tm) at Inpi all right Reserved
+   * @Licence GPL 2 & MIT
+   * @licence MIT - Portion of osCommerce 2.4
+   * @Info : https://www.clicshopping.org/forum/trademark/
+   *
+   */
 
   use ClicShopping\OM\Registry;
   use ClicShopping\OM\CLICSHOPPING;
 
-  class ht_mailchimp_360 {
+  class ht_mailchimp_360
+  {
     public $code;
     public $group;
     public $title;
@@ -20,19 +21,21 @@
     public $sort_order;
     public $enabled = false;
 
-    public function __construct() {
+    public function __construct()
+    {
       $this->code = get_class($this);
       $this->group = basename(__DIR__);
       $this->title = CLICSHOPPING::getDef('module_header_tags_mailchimp_360_title');
       $this->description = CLICSHOPPING::getDef('module_header_tags_mailchimp_360_description');
 
-      if ( defined('MODULE_HEADER_TAGS_MAILCHIMP_360_STATUS') ) {
+      if (defined('MODULE_HEADER_TAGS_MAILCHIMP_360_STATUS')) {
         $this->sort_order = MODULE_HEADER_TAGS_MAILCHIMP_360_SORT_ORDER;
         $this->enabled = (MODULE_HEADER_TAGS_MAILCHIMP_360_STATUS == 'True');
       }
     }
 
-    public function execute() {
+    public function execute()
+    {
 
       $CLICSHOPPING_Template = Registry::get('Template');
 
@@ -42,20 +45,23 @@
       $mc360 = new mc360();
       $mc360->set_cookies();
 
-      if (isset($_GET['Checkout']) && isset($_GET['Success']))  {
+      if (isset($_GET['Checkout']) && isset($_GET['Success'])) {
         $mc360->process();
       }
     }
 
-    public function isEnabled() {
+    public function isEnabled()
+    {
       return $this->enabled;
     }
 
-    public function check() {
+    public function check()
+    {
       return defined('MODULE_HEADER_TAGS_MAILCHIMP_360_STATUS');
     }
 
-    public function install() {
+    public function install()
+    {
       $CLICSHOPPING_Db = Registry::get('Db');
 
       $CLICSHOPPING_Db->save('configuration', [
@@ -128,21 +134,23 @@
       );
 
       return $CLICSHOPPING_Db->save('configuration', ['configuration_value' => '1'],
-                                              ['configuration_key' => 'WEBSITE_MODULE_INSTALLED']
-                            );
+        ['configuration_key' => 'WEBSITE_MODULE_INSTALLED']
+      );
     }
 
-    public function remove() {
+    public function remove()
+    {
       Registry::get('Db')->query('delete from :table_configuration where configuration_key in ("' . implode('", "', $this->keys()) . '")');
 
 // Internal parameters
       Registry::get('Db')->query('delete from :table_configuration where configuration_key in ("MODULE_HEADER_TAGS_MAILCHIMP_360_STORE_ID", "MODULE_HEADER_TAGS_MAILCHIMP_360_KEY_VALID")');
     }
 
-    public function keys() {
+    public function keys()
+    {
       return array('MODULE_HEADER_TAGS_MAILCHIMP_360_STATUS',
-                   'MODULE_HEADER_TAGS_MAILCHIMP_360_API_KEY',
-                   'MODULE_HEADER_TAGS_MAILCHIMP_360_DEBUG_EMAIL',
-                   'MODULE_HEADER_TAGS_MAILCHIMP_360_SORT_ORDER');
+        'MODULE_HEADER_TAGS_MAILCHIMP_360_API_KEY',
+        'MODULE_HEADER_TAGS_MAILCHIMP_360_DEBUG_EMAIL',
+        'MODULE_HEADER_TAGS_MAILCHIMP_360_SORT_ORDER');
     }
   }

@@ -1698,7 +1698,7 @@
       } else {
         $response = $serial;
       }
-      if (is_array($response) && isset($response["error"])) {
+      if (\is_array($response) && isset($response["error"])) {
         $this->errorMessage = $response["error"];
         $this->errorCode = $response["code"];
         return false;
@@ -1720,7 +1720,7 @@
           $name = $key . "[" . $name . "]";
         }
 
-        if (is_array($val) || is_object($val)) {
+        if (\is_array($val) || is_object($val)) {
           $ret[] = $this->httpBuildQuery($val, $name);
         } elseif ($val !== null) {
           $ret[] = $name . "=" . urlencode($val);

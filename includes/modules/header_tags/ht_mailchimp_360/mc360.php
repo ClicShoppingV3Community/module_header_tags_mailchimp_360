@@ -245,7 +245,7 @@
       // send!()
 
       if ($this->debug && !empty($debug_email)) {
-        $CLICSHOPPING_Mail->clicMail('', MODULE_HEADER_TAGS_MAILCHIMP_360_DEBUG_EMAIL, 'MailChimp Debug E-Mail', $debug_email, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
+        $CLICSHOPPING_Mail->clicMail(null, MODULE_HEADER_TAGS_MAILCHIMP_360_DEBUG_EMAIL, 'MailChimp Debug E-Mail', $debug_email, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
       }
     }//update
   }//mc360 class

@@ -1663,7 +1663,7 @@
       $payload .= "Host: " . $host . "\r\n";
       $payload .= "User-Agent: MCAPI/" . $this->version . "\r\n";
       $payload .= "Content-type: application/x-www-form-urlencoded\r\n";
-      $payload .= "Content-length: " . strlen($post_vars) . "\r\n";
+      $payload .= "Content-length: " . \strlen($post_vars) . "\r\n";
       $payload .= "Connection: close \r\n\r\n";
       $payload .= $post_vars;
 

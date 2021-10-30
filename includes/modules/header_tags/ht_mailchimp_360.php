@@ -45,7 +45,7 @@
       $mc360 = new mc360();
       $mc360->set_cookies();
 
-      if (isset($_GET['Checkout']) && isset($_GET['Success'])) {
+      if (isset($_GET['Checkout'], $_GET['Success'])) {
         $mc360->process();
       }
     }

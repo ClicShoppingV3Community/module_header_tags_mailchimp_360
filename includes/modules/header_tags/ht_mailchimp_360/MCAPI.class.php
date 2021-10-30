@@ -1720,7 +1720,7 @@
           $name = $key . "[" . $name . "]";
         }
 
-        if (\is_array($val) || is_object($val)) {
+        if (\is_array($val) || \is_object($val)) {
           $ret[] = $this->httpBuildQuery($val, $name);
         } elseif ($val !== null) {
           $ret[] = $name . "=" . urlencode($val);
